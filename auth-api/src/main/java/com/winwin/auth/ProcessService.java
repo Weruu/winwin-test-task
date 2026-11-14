@@ -11,6 +11,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Duration;
 import java.util.UUID;
 
 @Service
@@ -19,14 +20,13 @@ public class ProcessService {
     private final RestClient restClient;
     private final ProcessingLogRepository logs;
 
-    public ProcessService(RestClient.Builder builder,
-                          ProcessingLogRepository logs,
+    public ProcessService(ProcessingLogRepository logs,
                           @Value("${app.data-api.url}") String dataApiUrl,
                           @Value("${app.internal-token}") String internalToken) {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(3000);
-        factory.setReadTimeout(5000);
-        this.restClient = builder
+        factory.setConnectTimeout(Duration.ofSeconds(3));
+        factory.setReadTimeout(Duration.ofSeconds(5));
+        this.restClient = RestClient.builder()
                 .baseUrl(dataApiUrl)
                 .defaultHeader("X-Internal-Token", internalToken)
                 .requestFactory(factory)
@@ -52,3 +52,4 @@ public class ProcessService {
         logs.save(new ProcessingLog(userId, text, response.result()));
         return response.result();
     }
+}
