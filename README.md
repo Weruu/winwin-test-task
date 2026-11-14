@@ -36,7 +36,7 @@ Java and Maven are **not** required on the host: both services are built inside 
 ## Quick start
 
 ```bash
-git clone <repo-url>
+git clone <https://github.com/weruu/winwin-test-task.git>
 cd winwin-test-task
 docker compose up -d --build
 docker compose ps
