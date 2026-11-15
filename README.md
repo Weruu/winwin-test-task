@@ -151,12 +151,6 @@ Created by the Flyway migration `auth-api/src/main/resources/db/migration/V1__in
 - `data-api` is published on `localhost:8081` because the task requires it. In a real deployment it would only be reachable inside the Docker network.
 - Config via environment variables is read at start: after changing `.env`, run `docker compose up -d` again so the containers are recreated.
 
-**Windows notes**
-- In PowerShell, `curl` is an alias of `Invoke-WebRequest` and JSON quoting breaks. Use Git Bash, or `Invoke-RestMethod`:
-  ```powershell
-  Invoke-RestMethod -Method Post -Uri http://localhost:8080/api/auth/register `
-    -ContentType "application/json" -Body '{"email":"a@a.com","password":"pass"}'
-  ```
 
 ## Troubleshooting
 
